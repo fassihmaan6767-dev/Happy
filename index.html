@@ -201,55 +201,165 @@
       box-shadow: 0 4px 15px rgba(209, 73, 91, 0.1);
     }
 
-    /* Screen 3: Cake */
+    /* Screen 3: HTML/CSS Cake */
     .cake-container {
       position: relative;
-      margin-top: 30px;
+      margin-top: 50px;
       height: 180px;
-      width: 200px;
+      width: 240px;
       display: flex;
-      justify-content: center;
-      align-items: flex-end;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
       margin-left: auto;
       margin-right: auto;
+      cursor: pointer;
+      z-index: 10;
     }
-
-    .cake-emoji {
-      font-size: 10rem;
-      line-height: 1;
+    
+    .tier {
       position: relative;
+      border-radius: 10px 10px 5px 5px;
+      box-shadow: inset -5px -5px 15px rgba(0,0,0,0.1),
+                  0 5px 10px rgba(0,0,0,0.1);
+    }
+    
+    .top-tier {
+      width: 140px;
+      height: 60px;
+      background: #ffa8b6;
       z-index: 2;
     }
-
-    .candle {
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 60px;
-      background: transparent;
-      z-index: 3;
-      cursor: pointer;
+    
+    .bottom-tier {
+      width: 200px;
+      height: 70px;
+      background: #ffb6b9;
     }
-
-    .flame {
+    
+    /* Frosting */
+    .frosting {
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 35px;
-      background: #ff9d00;
-      border-radius: 50% 50% 20% 20%;
-      box-shadow: 0 0 15px #ff9d00, 0 0 30px #ff0000;
-      animation: flicker 0.1s ease-in-out infinite alternate;
-      transition: opacity 0.5s ease;
+      left: 0;
+      width: 100%;
+      height: 25px;
+      background: #fffafa;
+      border-radius: 10px 10px 50% 50%;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    
+    .frosting::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: 
+        radial-gradient(circle 10px at 15px 5px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 12px at 45px 8px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 9px at 75px 4px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 14px at 105px 10px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 11px at 135px 2px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 10px at 165px 7px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 9px at 185px 3px, #fffafa 100%, transparent 100%);
     }
 
-    @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 0.9; }
-      100% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+    .top-tier .frosting::after {
+      background: 
+        radial-gradient(circle 10px at 15px 5px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 12px at 45px 8px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 9px at 75px 4px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 14px at 100px 10px, #fffafa 100%, transparent 100%),
+        radial-gradient(circle 11px at 125px 2px, #fffafa 100%, transparent 100%);
+    }
+
+    .css-candle {
+      position: absolute;
+      top: 15px; /* Sit right on top of the cake */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 40px;
+      background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff9ca8 5px, #ff9ca8 10px);
+      border-radius: 4px;
+      box-shadow: inset -2px -2px 4px rgba(0,0,0,0.1);
+      z-index: 3;
+    }
+    
+    .css-wick {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 8px;
+      background: #444;
+    }
+    
+    .css-flame {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      width: 18px;
+      height: 26px;
+      margin-left: -9px;
+      background: radial-gradient(ellipse at center, #ffeeaa 0%, #ffb000 60%, #ff3300 100%);
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 15px #ffb000, 0 0 30px #ff3300;
+      animation: cssFlicker 0.15s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-out;
+    }
+
+    @keyframes cssFlicker {
+      0% { transform: scale(1) rotate(-1deg); }
+      100% { transform: scale(1.05) rotate(2deg); }
+    }
+
+    .css-flame.blown-out {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    .css-smoke {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      background: rgba(200, 200, 200, 0.8);
+      border-radius: 50%;
+      opacity: 0;
+      filter: blur(4px);
+      pointer-events: none;
+    }
+
+    .css-smoke.puff {
+      animation: puffSmoke 1.5s ease-out forwards;
+    }
+
+    @keyframes puffSmoke {
+      0% { opacity: 0.8; transform: translateX(-50%) scale(1) translateY(0); }
+      50% { opacity: 0.3; filter: blur(8px); }
+      100% { opacity: 0; transform: translateX(-50%) scale(4) translateY(-60px); }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 10px;
+      z-index: 1000;
+      animation: confettiFall linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
 
     .fade-in-text {
@@ -295,7 +405,7 @@
     }
 
     /* The array of small boxes (Grid) */
-    .gifts-grid {
+    .gifts-list {
       position: absolute;
       top: 0;
       left: 0;
@@ -303,7 +413,8 @@
       height: 100%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(3, 1fr);
+      grid-auto-rows: 150px;
+      align-content: flex-start;
       gap: 15px;
       padding: 15px;
       box-sizing: border-box;
@@ -311,6 +422,19 @@
       background: rgba(255,255,255,0.4);
       border-radius: 20px;
       box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+      overflow-y: auto;
+    }
+
+    .gifts-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .gifts-list::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+    }
+    .gifts-list::-webkit-scrollbar-thumb {
+      background: rgba(209, 73, 91, 0.4);
+      border-radius: 10px;
     }
 
     /* The Big Red Box */
@@ -393,77 +517,146 @@
     .red-box-layer.opened .rb-text,
     .red-box-layer.opened .rb-ribbon-h { opacity: 0; transition: opacity 0.3s; }
 
-    /* Small Ribbon Boxes */
+    /* Messenger Style Gift Boxes */
     .small-box {
       position: relative;
       width: 100%;
       height: 100%;
-      background: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
+      perspective: 1000px;
     }
 
-    .sb-photo {
+    .sb-base {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
       background: #f0f0f0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 1;
+    }
+
+    .sb-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(0.8);
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .small-box.opened .sb-photo {
+      transform: scale(1);
+    }
+
+    .sb-photo-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #999;
       font-size: 0.8rem;
+      text-align: center;
+      background: #e8e8e8;
     }
 
-    .sb-lid {
+    .sb-lid-container {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #ffb6b9, #fae3d9);
-      transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 1s ease;
-      transform-origin: top;
       z-index: 2;
       border-radius: 12px;
+      background: linear-gradient(135deg, #ff7eb3, #ff758c);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 5px 15px rgba(255, 117, 140, 0.3);
+      transform-style: preserve-3d;
+      transform-origin: center center;
     }
 
-    .sb-ribbon-v {
+    .sb-lid-container::after {
+      content: '';
       position: absolute;
-      width: 15%;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18%;
       height: 100%;
-      background: #8ac6d1;
-      left: 42.5%;
-      z-index: 3;
-      transition: all 1s ease;
-      border-radius: 2px;
-    }
-    
-    .sb-ribbon-h {
-      position: absolute;
-      width: 100%;
-      height: 15%;
-      background: #8ac6d1;
-      top: 42.5%;
-      z-index: 3;
-      transition: all 1s ease;
-      border-radius: 2px;
+      background: #ffffff;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
 
-    .small-box.opened .sb-lid {
-      transform: translateY(-100%) rotateX(45deg);
-      opacity: 0;
+    .sb-lid-container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 18%;
+      background: #ffffff;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      z-index: 1;
+    }
+
+    .sb-bow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 20px;
+      z-index: 3;
     }
     
-    .small-box.opened .sb-ribbon-v,
-    .small-box.opened .sb-ribbon-h {
-      transform: translateY(-100%);
-      opacity: 0;
+    .sb-bow-left, .sb-bow-right {
+      position: absolute;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    }
+    .sb-bow-left { left: -10px; }
+    .sb-bow-right { right: -10px; }
+    .sb-bow-center {
+      position: absolute;
+      top: 5px;
+      left: 15px;
+      width: 10px;
+      height: 10px;
+      background: #f0f0f0;
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    @keyframes dropLidAnimation {
+      0% {
+        transform: scale(1) translateY(0) rotateZ(0);
+        opacity: 1;
+      }
+      30% {
+        transform: translateY(-40px) rotateZ(-10deg) scale(1.05);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(200px) rotateZ(-40deg) scale(0.9);
+        opacity: 0;
+      }
+    }
+
+    .small-box.opened .sb-lid-container {
+      animation: dropLidAnimation 0.9s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+      pointer-events: none;
     }
 
     /* Screen 5: Audio */
@@ -514,9 +707,270 @@
       background: rgba(209, 73, 91, 0.4);
       border-radius: 10px;
     }
+    /* Balloon Game Styles */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 70px;
+      height: 90px;
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+      box-shadow: inset -10px -10px 20px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      animation: floatBalloon linear forwards;
+      z-index: 10;
+      touch-action: none;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 40px;
+      background: rgba(255,255,255,0.8);
+      z-index: -1;
+    }
+    .balloon::before {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 8px;
+      background-color: inherit;
+      border-radius: 50%;
+    }
+
+    @keyframes floatBalloon {
+      0% { transform: translateY(0) scale(1) translateX(0); }
+      50% { transform: translateY(-60vh) scale(1) translateX(20px); }
+      100% { transform: translateY(-130vh) scale(1) translateX(-20px); }
+    }
+
+    .balloon.pop {
+      transform: scale(1.5);
+      opacity: 0;
+      transition: all 0.15s ease-out;
+    }
+    
+    .pop-burst {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+    }
+    .pop-particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      animation: shootOut 0.4s ease-out forwards;
+    }
+    @keyframes shootOut {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Background */
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .float-item {
+      position: absolute;
+      bottom: -10vh;
+      font-size: 2rem;
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+    
+    @keyframes floatUp {
+      0% { 
+        transform: translateY(0) translateX(0) scale(1) rotate(0deg); 
+        opacity: 0; 
+      }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { 
+        transform: translateY(-120vh) translateX(calc(100px * var(--sway, 1))) scale(1.2) rotate(calc(30deg * var(--sway, 1))); 
+        opacity: 0; 
+      }
+    }
+
+    /* Flirty Tease */
+    .btn-yes {
+      background: rgba(209, 73, 91, 0.8);
+      transform-origin: center;
+    }
+    .btn-no {
+      background: #999 !important;
+      transform-origin: center;
+    }
+
+    /* Kiss Attack */
+    .kiss-emoji {
+      position: absolute;
+      font-size: 3rem;
+      bottom: -40px;
+      animation: kissPop 2s ease-out forwards;
+      pointer-events: none;
+      z-index: 100;
+    }
+    @keyframes kissPop {
+      0% { transform: translate(0, 0) scale(0.5) rotate(0deg); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot)); opacity: 0; }
+    }
+
+    /* Image Preview Modal */
+    .preview-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .preview-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    .preview-img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .preview-modal.active .preview-img {
+      transform: scale(1);
+    }
+    .close-preview {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s;
+    }
+    .close-preview:hover {
+      background: rgba(209, 73, 91, 0.8);
+    }
+
+    /* Security Classes */
+    #protectedContent {
+      display: none !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 50;
+    }
+    body.is-unlocked #protectedContent {
+      display: block !important;
+    }
+    body.is-unlocked #screen1 {
+      display: none !important;
+    }
+
+    /* 10 Things Grid */
+    .things-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+      max-height: 40vh;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .things-grid::-webkit-scrollbar { width: 6px; }
+    .things-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 10px; }
+    .things-grid::-webkit-scrollbar-thumb { background: rgba(209, 73, 91, 0.4); border-radius: 10px; }
+    .thing-box {
+      width: 100%;
+      height: 80px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .thing-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .thing-box.flipped .thing-inner {
+      transform: rotateY(180deg);
+    }
+    .thing-front, .thing-back {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .thing-front {
+      background: linear-gradient(135deg, #ff7eb3, #ff758c);
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .thing-back {
+      background: rgba(255,255,255,0.9);
+      color: var(--dark-text);
+      transform: rotateY(180deg);
+      border: 2px solid #ff758c;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
+
+  <div class="floating-bg" id="floatingBg"></div>
 
   <!-- Screen 1: Password -->
   <div id="screen1" class="screen active">
@@ -531,146 +985,269 @@
     </div>
   </div>
 
-  <!-- Screen 2: Greeting & Milestones -->
-  <div id="screen2" class="screen">
-    <div class="glass-card">
-      <div class="date-tribute">The day my universe was born:<br>4th May 2010 🌍❤️</div>
-      <h1 class="title-cursive" style="font-size: 3.5rem;">Happy Birthday</h1>
-      <div class="typewriter-container">
-        <span id="typewriter-text" class="typewriter-text"></span>
+  <div id="protectedContent">
+    <!-- Screen 2: Greeting & Milestones -->
+    <div id="screen2" class="screen">
+      <div class="glass-card">
+        <div class="date-tribute">On May 4th, 2010, exactly 16 years ago, the most beautiful girl in my universe was born 🌍❤️</div>
+        <h1 class="title-cursive" style="font-size: 3.5rem;">Happy Birthday</h1>
+        <div class="typewriter-container">
+          <span id="typewriter-text" class="typewriter-text"></span>
+        </div>
+        <div class="milestone-badge">
+          Celebrating 1.5 Beautiful Years &<br>Our 2nd Birthday Together! 👩‍❤️‍👨
+        </div>
+        <button onclick="goToScreen('screenTease')">Next Surprise ✨</button>
       </div>
-      <div class="milestone-badge">
-        Celebrating 1.5 Beautiful Years &<br>Our 2nd Birthday Together! 👩‍❤️‍👨
-      </div>
-      <button onclick="goToScreen('screen3')">Next Surprise ✨</button>
     </div>
-  </div>
 
-  <!-- Screen 3: Cake -->
-  <div id="screen3" class="screen">
-    <div class="glass-card">
-      <h2 class="title-cursive">Make a Wish</h2>
-      <p style="font-size: 1.1rem; font-weight: 500;">Tap the candle to blow it out! 🎂</p>
-      <div class="cake-container">
-        <div class="cake-emoji">🎂</div>
-        <div class="candle" onclick="blowCandle()">
-          <div class="flame" id="flame"></div>
+    <!-- Screen Tease -->
+    <div id="screenTease" class="screen">
+      <div class="glass-card">
+        <div style="width: 100%; border-radius: 15px; display: flex; justify-content: center; align-items: center; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+          <img src="https://i.ibb.co/1GgWhBKw/20260428-103452.jpg" alt="20260428-103452" style="width: 100%; max-height: 350px; object-fit: contain; display: block;">
+        </div>
+        <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px; align-items: center;">
+          <button id="btnYes" class="btn-yes" onclick="goToScreen('screenKisses')">Yes</button>
+          <button id="btnNo" class="btn-no" onclick="clickNo()">No</button>
         </div>
       </div>
-      <div id="cakeMessage" class="fade-in-text">Happy Birthday my love! 🎈</div>
-      <button id="presentsBtn" class="hidden-btn" onclick="goToScreen('screen4')">See Your Presents 🎁</button>
     </div>
-  </div>
 
-  <!-- Screen 4: Box Reveal -->
-  <div id="screen4" class="screen">
-    <div class="glass-card" style="width: 380px;">
-      <h2 class="title-cursive" style="font-size: 2.2rem;">Precious Memories</h2>
-      
-      <div class="gift-stage-wrapper">
-        <div class="gift-stage">
+    <!-- Screen Kisses -->
+    <div id="screenKisses" class="screen">
+      <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.3); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index:0;"></div>
+      <div class="glass-card" style="z-index: 10;">
+        <h2 class="title-cursive" style="font-size: 2.2rem; margin-bottom: 30px;">Jy ly zyada shalii kishia🤭❤️</h2>
+        <div id="kissContainer" style="position: relative; width: 100%; height: 120px; margin-bottom: 10px;"></div>
+        <button id="btnToCake" style="opacity: 0; pointer-events: none; transition: opacity 1s ease;" onclick="goToScreen('screen3')">Chlyy ayee cake cut krty hy</button>
+      </div>
+    </div>
+
+    <!-- Screen 3: Cake -->
+    <div id="screen3" class="screen">
+      <div class="glass-card">
+        <h2 class="title-cursive">Make a Wish</h2>
+        <p style="font-size: 1.1rem; font-weight: 500;">Tap the candle to blow it out! 🎂</p>
+        <div class="cake-container" onclick="blowCandle()">
+          <div class="tier top-tier"><div class="frosting"></div></div>
+          <div class="tier bottom-tier"><div class="frosting"></div></div>
+          <div class="css-candle">
+            <div class="css-wick"></div>
+            <div class="css-flame" id="flame"></div>
+            <div class="css-smoke" id="smoke"></div>
+          </div>
+        </div>
+        <div id="cakeMessage" class="fade-in-text">Happy Birthday My Love❤️💋</div>
+        <button id="presentsBtn" class="hidden-btn" onclick="goToScreen('screen10Things')">See Your Presents 🎁</button>
+      </div>
+    </div>
+
+    <!-- Screen 10 Things -->
+    <div id="screen10Things" class="screen">
+      <div class="glass-card" style="width: 380px;">
+        <h2 class="title-cursive" style="font-size: 2.2rem;">10 things Special About you❤️💋🤌🏻</h2>
+        <p style="font-size: 1rem; font-weight: 500; margin-bottom: 5px; color: var(--dark-text);">tap one the boxes to see!</p>
+        <div class="things-grid">
+          <!-- Generate 10 boxes -->
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 1</div><div class="thing-back">Apkii ankhy👀🤌🏻</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 2</div><div class="thing-back">Apka shrmana Uff🤭❤️❤️</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 3</div><div class="thing-back">Apka mere care krna❤️🤌🏻🥺</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 4</div><div class="thing-back">Mujhe mya g khna🤭❤️🫂🫂🫂</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 5</div><div class="thing-back">Mujhe pr nazar rkhna🤭❤️🫀🫀</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 6</div><div class="thing-back">Apki pyari pyari baty sun na🥺🫂❤️❤️❤️</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 7</div><div class="thing-back">Apki awaz❤️💋🫂</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 8</div><div class="thing-back">Apky nazuk shyy hathh Ufff❤️💋💋💋🤭</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 9</div><div class="thing-back">Apka mujhe special feel krwana🥺🫂🫂🫂🫂🫀</div></div></div>
+          <div class="thing-box" onclick="flipThing(this)"><div class="thing-inner"><div class="thing-front">Thing 10</div><div class="thing-back">Apki palii pali shi shrarty❤️💋💋💋🤭🙈</div></div></div>
+        </div>
+        <button id="btnToPhotoReveal" class="hidden-btn" onclick="goToScreen('screen4')" style="margin-top: 20px;">Kuch Dekhana hy apko🙈</button>
+      </div>
+    </div>
+
+    <!-- Screen 4: Box Reveal -->
+    <div id="screen4" class="screen">
+      <div class="glass-card" style="width: 380px;">
+        <h2 class="title-cursive" style="font-size: 2.2rem;">Just Look At Yourself🙈my love🤭❤️💋</h2>
+        <p style="font-size: 1rem; font-weight: 500; margin-bottom: 5px;">Tap on the boxes to view!</p>
+        
+        <div class="gift-stage-wrapper">
+          <div class="gift-stage">
+            
+            <!-- List of 10 small gifts -->
+            <div class="gifts-list">
+              <!-- Box 1 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG-20251219-WA0004.jpg')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG-20251219-WA0004.jpg" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 2 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Screenshot_2025_0926_141340.png')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Screenshot_2025_0926_141340.png" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 3 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/20250706_083844.png')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/20250706_083844.png" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 4 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Screenshot_2025_0905_212256.png')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Screenshot_2025_0905_212256.png" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 5 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG-20260322-WA0027.jpg')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG-20260322-WA0027.jpg" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 6 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/20260430_113641.jpg')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/20260430_113641.jpg" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 7 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG_20260328_153409-01.jpeg')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG_20260328_153409-01.jpeg" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 8 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG_20260430_123939.png')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/IMG_20260430_123939.png" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 9 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Minimalist%20Happy%20Birthday%20Instagram%20Post.png')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Minimalist%20Happy%20Birthday%20Instagram%20Post.png" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+              <!-- Box 10 -->
+              <div class="small-box" onclick="openAndPreview(this, 'https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Screenshot_2025_1015_214711.png')">
+                <div class="sb-base">
+                  <img src="https://raw.githubusercontent.com/fassihmaan6767-dev/Birthday-pics/refs/heads/main/Screenshot_2025_1015_214711.png" alt="" class="sb-photo">
+                </div>
+                <div class="sb-lid-container">
+                  <div class="sb-bow"><div class="sb-bow-left"></div><div class="sb-bow-right"></div><div class="sb-bow-center"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Big Red Box Layer on top -->
+            <div class="red-box-layer" id="redBox" onclick="openRedBox()">
+              <div class="rb-half rb-left"></div>
+              <div class="rb-half rb-right"></div>
+              <div class="rb-ribbon-h"></div>
+              <div class="rb-seal"></div>
+              <div class="rb-text">Look how pretty you are ❤️<br><span style="font-size: 1rem; font-family: 'Poppins', sans-serif;">(Tap to unbox)</span></div>
+            </div>
+          </div>
+        </div>
+        
+        <button id="nextToAudioBtn" class="hidden-btn" onclick="goToScreen('screenGameIntro')">Next Surprise ✨</button>
+
+      </div>
+    </div>
+
+    <!-- Screen Game Intro -->
+    <div id="screenGameIntro" class="screen">
+      <div class="glass-card">
+        <h2 style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 600; line-height: 1.4; color: var(--red-accent);">Bandri🙈 Aise thori mily ga Gift🤭<br>Game khelni pry gi aik👉🏻👈🏻</h2>
+        <button onclick="startGame()" style="margin-top: 15px;">Ready My Pookie Don💋</button>
+      </div>
+    </div>
+
+    <!-- Screen Game Play -->
+    <div id="screenGamePlay" class="screen" style="overflow: hidden;">
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.4); backdrop-filter: blur(8px); z-index: 0;"></div>
+      <div style="position: absolute; top: 10%; z-index: 10; background: rgba(255,255,255,0.7); backdrop-filter: blur(5px); padding: 15px 25px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 4px 15px rgba(209, 73, 91, 0.2);">
+        <h2 class="title-cursive" style="font-size: 2rem; color: var(--red-accent); margin-bottom: 5px;">Pop 4 balloons to unlock your gift! 🎈</h2>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--dark-text);"><span id="balloonScore">0</span> / 4 </div>
+      </div>
+      <div id="gameArea" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;"></div>
+    </div>
+
+    <!-- Screen 5: Audio -->
+    <div id="screen5" class="screen">
+      <div class="glass-card">
+        <h2 class="title-cursive">Listen Close</h2>
+        <p style="font-size: 1.1rem;">I left something special for you.</p>
+        
+        <button id="revealAudioBtn" onclick="revealAudio()">Surprise Voice Note For You 🎧</button>
+        
+        <div id="audioPlayerContainer" class="audio-player" style="display:none; opacity:0;">
+          <!-- PLACEHOLDER AUDIO: Replace the src below with your audio link (.mp3, .m4a, etc) -->
+          <audio id="voiceNote" controls>
+            <source src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+
+        <button onclick="goToScreen('screen6')">Read Your Letter 💌</button>
+      </div>
+    </div>
+
+    <!-- Screen 6: Letter -->
+    <div id="screen6" class="screen">
+      <div class="glass-card love-letter">
+        <div class="letter-scroll" id="letterContent">
+          <!-- PLACEHOLDER: Write her Name or Nickname below -->
+          <h2 class="title-cursive" style="text-align: left; font-size: 2.5rem;">My Dearest [Her Name / Nickname],</h2>
           
-          <!-- Grid of 6 small gifts -->
-          <div class="gifts-grid">
-            <!-- Box 1 -->
-            <div class="small-box" onclick="openSmallBox(this)">
-              <!-- PLACEHOLDER 1: Add image link in src -->
-              <img src="" alt="" class="sb-photo" onerror="this.style.display='none'">
-              <div class="sb-photo" style="z-index: 0;">Add Photo 1<br>(src="")</div>
-              <div class="sb-lid"></div><div class="sb-ribbon-v"></div><div class="sb-ribbon-h"></div>
-            </div>
-            <!-- Box 2 -->
-            <div class="small-box" onclick="openSmallBox(this)">
-              <!-- PLACEHOLDER 2: Add image link in src -->
-              <img src="" alt="" class="sb-photo" onerror="this.style.display='none'">
-              <div class="sb-photo" style="z-index: 0;">Add Photo 2<br>(src="")</div>
-              <div class="sb-lid"></div><div class="sb-ribbon-v"></div><div class="sb-ribbon-h"></div>
-            </div>
-            <!-- Box 3 -->
-            <div class="small-box" onclick="openSmallBox(this)">
-              <!-- PLACEHOLDER 3: Add image link in src -->
-              <img src="" alt="" class="sb-photo" onerror="this.style.display='none'">
-              <div class="sb-photo" style="z-index: 0;">Add Photo 3<br>(src="")</div>
-              <div class="sb-lid"></div><div class="sb-ribbon-v"></div><div class="sb-ribbon-h"></div>
-            </div>
-            <!-- Box 4 -->
-            <div class="small-box" onclick="openSmallBox(this)">
-              <!-- PLACEHOLDER 4: Add image link in src -->
-              <img src="" alt="" class="sb-photo" onerror="this.style.display='none'">
-              <div class="sb-photo" style="z-index: 0;">Add Photo 4<br>(src="")</div>
-              <div class="sb-lid"></div><div class="sb-ribbon-v"></div><div class="sb-ribbon-h"></div>
-            </div>
-            <!-- Box 5 -->
-            <div class="small-box" onclick="openSmallBox(this)">
-              <!-- PLACEHOLDER 5: Add image link in src -->
-              <img src="" alt="" class="sb-photo" onerror="this.style.display='none'">
-              <div class="sb-photo" style="z-index: 0;">Add Photo 5<br>(src="")</div>
-              <div class="sb-lid"></div><div class="sb-ribbon-v"></div><div class="sb-ribbon-h"></div>
-            </div>
-            <!-- Box 6 -->
-            <div class="small-box" onclick="openSmallBox(this)">
-              <!-- PLACEHOLDER 6: Add image link in src -->
-              <img src="" alt="" class="sb-photo" onerror="this.style.display='none'">
-              <div class="sb-photo" style="z-index: 0;">Add Photo 6<br>(src="")</div>
-              <div class="sb-lid"></div><div class="sb-ribbon-v"></div><div class="sb-ribbon-h"></div>
-            </div>
-          </div>
-
-          <!-- Big Red Box Layer on top -->
-          <div class="red-box-layer" id="redBox" onclick="openRedBox()">
-            <div class="rb-half rb-left"></div>
-            <div class="rb-half rb-right"></div>
-            <div class="rb-ribbon-h"></div>
-            <div class="rb-seal"></div>
-            <div class="rb-text">Look how pretty you are ❤️<br><span style="font-size: 1rem; font-family: 'Poppins', sans-serif;">(Tap to unbox)</span></div>
-          </div>
+          <!-- PLACEHOLDER: Type your long birthday message here inside the <p> tags -->
+          <p>
+            Today is the most special day, because it's the day you came into this world. I am incredibly grateful for every moment, every smile, and every memory we share.
+          </p>
+          <p>
+            You light up my life in ways I never thought possible. [Continue your personalized message here...]
+          </p>
+          
+          <div class="closing">All my love,<br>Fasih (Sahib) ❤️</div>
         </div>
+        <button onclick="goToScreen('screen2')" style="margin-top: 30px;">Replay Our Memories ⏪</button>
       </div>
-      
-      <button id="nextToAudioBtn" class="hidden-btn" onclick="goToScreen('screen5')">Next Surprise 🎧</button>
-
     </div>
   </div>
 
-  <!-- Screen 5: Audio -->
-  <div id="screen5" class="screen">
-    <div class="glass-card">
-      <h2 class="title-cursive">Listen Close</h2>
-      <p style="font-size: 1.1rem;">I left something special for you.</p>
-      
-      <button id="revealAudioBtn" onclick="revealAudio()">Surprise Voice Note For You 🎧</button>
-      
-      <div id="audioPlayerContainer" class="audio-player" style="display:none; opacity:0;">
-        <!-- PLACEHOLDER AUDIO: Replace the src below with your audio link (.mp3, .m4a, etc) -->
-        <audio id="voiceNote" controls>
-          <source src="" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-
-      <button onclick="goToScreen('screen6')">Read Your Letter 💌</button>
-    </div>
-  </div>
-
-  <!-- Screen 6: Letter -->
-  <div id="screen6" class="screen">
-    <div class="glass-card love-letter">
-      <div class="letter-scroll" id="letterContent">
-        <!-- PLACEHOLDER: Write her Name or Nickname below -->
-        <h2 class="title-cursive" style="text-align: left; font-size: 2.5rem;">My Dearest [Her Name / Nickname],</h2>
-        
-        <!-- PLACEHOLDER: Type your long birthday message here inside the <p> tags -->
-        <p>
-          Today is the most special day, because it's the day you came into this world. I am incredibly grateful for every moment, every smile, and every memory we share.
-        </p>
-        <p>
-          You light up my life in ways I never thought possible. [Continue your personalized message here...]
-        </p>
-        
-        <div class="closing">All my love,<br>Fasih (Sahib) ❤️</div>
-      </div>
-      <button onclick="goToScreen('screen2')" style="margin-top: 30px;">Replay Our Memories ⏪</button>
-    </div>
+  <!-- Image Preview Modal -->
+  <div id="imagePreviewModal" class="preview-modal" onclick="closePreview()">
+    <button class="close-preview" onclick="closePreview()">&times;</button>
+    <img id="previewImg" class="preview-img" src="" alt="Preview">
   </div>
 
   <script>
@@ -689,12 +1266,78 @@
         window.typewriterStarted = true;
         typeLoop();
       }
+      if(screenId === 'screenKisses') {
+        startKissAttack();
+      }
+    }
+
+    // Tease Logic
+    let noClickCount = 0;
+    function clickNo() {
+      noClickCount++;
+      const btnNo = document.getElementById('btnNo');
+      const btnYes = document.getElementById('btnYes');
+      if (noClickCount === 1) {
+        btnNo.style.transform = 'scale(0.8)';
+      } else if (noClickCount === 2) {
+        btnNo.style.transform = 'scale(0.5)';
+      } else if (noClickCount >= 3) {
+        btnNo.style.display = 'none';
+        btnYes.style.transform = 'scale(1.4)';
+      }
+    }
+
+    // Kisses Logic
+    let kissInterval;
+    function startKissAttack() {
+      const container = document.getElementById('kissContainer');
+      container.innerHTML = ''; // reset
+      document.getElementById('btnToCake').style.opacity = '0';
+      document.getElementById('btnToCake').style.pointerEvents = 'none';
+      
+      let count = 0;
+      kissInterval = setInterval(() => {
+        const kiss = document.createElement('div');
+        kiss.className = 'kiss-emoji';
+        kiss.innerText = '💋';
+        kiss.style.left = '50%';
+        const tx = (Math.random() - 0.5) * 300 + 'px';
+        const ty = (Math.random() * -200 - 50) + 'px';
+        const rot = (Math.random() - 0.5) * 90 + 'deg';
+        kiss.style.setProperty('--tx', tx);
+        kiss.style.setProperty('--ty', ty);
+        kiss.style.setProperty('--rot', rot);
+        container.appendChild(kiss);
+        setTimeout(() => { if (kiss.parentNode) kiss.remove(); }, 2000);
+      }, 150);
+
+      setTimeout(() => {
+        clearInterval(kissInterval);
+        const btn = document.getElementById('btnToCake');
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+      }, 5000);
+    }
+
+    // 10 Things Logic
+    let thingsFlipped = 0;
+    function flipThing(el) {
+      if (!el.classList.contains('flipped')) {
+        el.classList.add('flipped');
+        thingsFlipped++;
+        if (thingsFlipped >= 1) { // Show next button as soon as they start interacting
+          document.getElementById('btnToPhotoReveal').classList.add('visible');
+        }
+      }
     }
 
     // Screen 1: Password Logic
+    let isUnlocked = false;
     function checkPassword() {
       const pwd = document.getElementById('pwdInput').value;
       if(pwd === '0417') {
+        isUnlocked = true;
+        document.body.classList.add('is-unlocked');
         goToScreen('screen2');
       } else {
         const box = document.getElementById('pwdBox');
@@ -703,10 +1346,16 @@
       }
     }
     
-    // Add enter key support for password
-    document.getElementById('pwdInput').addEventListener('keypress', function(e) {
-      if(e.key === 'Enter') checkPassword();
-    });
+    // Anti-tamper logic for tech-savvy kids
+    setInterval(() => {
+      if (!isUnlocked) {
+        const login = document.getElementById('screen1');
+        const protected = document.getElementById('protectedContent');
+        if (login && login.style.display === 'none') login.style.display = 'flex';
+        if (protected && protected.style.display === 'block') protected.style.display = 'none';
+        if (document.body.classList.contains('is-unlocked')) document.body.classList.remove('is-unlocked');
+      }
+    }, 1000);
 
     // Screen 2: Typewriter Effect
     const phrases = ["Mere Shehzadi❤️🫂", "Mela Bachaw👶🏻💋", "Mya g Ki Jann🫂🫂", "My Wifey❤️", "Mera Qalb❤️💋", "Mera sukkon🥺❤️🫂", "Mere Dil Ki dhrkan❤️🫀", "Mera Chand🌛❤️", "Mela Rashgullah😋😋💋", "Mere muhtarma❤️🤌🏻", "mere aikloti Ladli🫀🫂"];
@@ -715,6 +1364,7 @@
     let isDeleting = false;
 
     function typeLoop() {
+      if (!isUnlocked) return; // Don't run if not unlocked
       const el = document.getElementById('typewriter-text');
       const currentPhrase = phrases[phraseIndex];
       
@@ -742,13 +1392,139 @@
 
     // Screen 3: Blow Candle
     function blowCandle() {
-      document.getElementById('flame').style.opacity = '0';
+      const flame = document.getElementById('flame');
+      if (flame.classList.contains('blown-out')) return; // prevent re-trigger
+      flame.classList.add('blown-out');
+      
+      const smoke = document.getElementById('smoke');
+      if (smoke) smoke.classList.add('puff');
+      
       setTimeout(() => {
-        document.getElementById('flame').style.display = 'none';
+        flame.style.display = 'none';
         document.getElementById('cakeMessage').classList.add('visible');
+        fireConfetti();
         setTimeout(() => {
           document.getElementById('presentsBtn').classList.add('visible');
         }, 800);
+      }, 500);
+    }
+
+    function fireConfetti() {
+      const colors = ['#fcd3d3', '#ffb6b9', '#8ac6d1', '#ffd700', '#ff7eb3'];
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        confetti.style.animationDelay = Math.random() * 1.5 + 's';
+        
+        // Randomize shape (circle or rectangle)
+        if (Math.random() > 0.5) {
+          confetti.style.borderRadius = '50%';
+        }
+        
+        document.body.appendChild(confetti);
+        
+        // Cleanup element after animation
+        setTimeout(() => confetti.remove(), 6000);
+      }
+    }
+
+    // Balloon Game Logic
+    let balloonInterval;
+    let poppedCount = 0;
+
+    function startGame() {
+      goToScreen('screenGamePlay');
+      poppedCount = 0;
+      document.getElementById('balloonScore').innerText = poppedCount;
+      document.getElementById('gameArea').innerHTML = '';
+      
+      // Start spawning balloons
+      balloonInterval = setInterval(() => {
+        if(poppedCount >= 4) {
+          clearInterval(balloonInterval);
+          return;
+        }
+        spawnBalloon();
+      }, 800);
+    }
+
+    function spawnBalloon() {
+      const colors = ['#ff7eb3', '#8ac6d1', '#ffd700', '#ffb6b9', '#d1495b'];
+      const curColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      balloon.style.left = (Math.random() * 70 + 15) + 'vw';
+      balloon.style.backgroundColor = curColor;
+      
+      const duration = Math.random() * 3 + 4; // 4 to 7 seconds
+      balloon.style.animationDuration = duration + 's';
+      
+      const handlePop = (e) => {
+        e.preventDefault();
+        popBalloon(balloon, curColor);
+      };
+      
+      balloon.addEventListener('touchstart', handlePop, {passive: false});
+      balloon.addEventListener('mousedown', handlePop);
+      
+      document.getElementById('gameArea').appendChild(balloon);
+      
+      // Remove balloon if it floats away without being popped
+      setTimeout(() => {
+        if(balloon.parentNode) balloon.remove();
+      }, duration * 1000);
+    }
+    
+    function popBalloon(balloon, color) {
+      if (balloon.classList.contains('pop')) return;
+      balloon.classList.add('pop');
+      
+      const rect = balloon.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      
+      createBurst(x, y, color);
+      
+      setTimeout(() => {
+        if (balloon.parentNode) balloon.remove();
+      }, 150);
+
+      poppedCount++;
+      document.getElementById('balloonScore').innerText = poppedCount;
+
+      if (poppedCount >= 4) {
+        clearInterval(balloonInterval);
+        setTimeout(() => {
+          goToScreen('screen5'); // Audio Screen
+        }, 1500);
+      }
+    }
+    
+    function createBurst(x, y, color) {
+      const burst = document.createElement('div');
+      burst.className = 'pop-burst';
+      // Adjust Coordinates based on screenGamePlay being absolute 0,0
+      burst.style.left = x + 'px';
+      burst.style.top = y + 'px';
+      
+      for (let i = 0; i < 8; i++) {
+        const p = document.createElement('div');
+        p.className = 'pop-particle';
+        p.style.backgroundColor = color;
+        const angle = (i / 8) * Math.PI * 2;
+        const radius = 60;
+        p.style.setProperty('--tx', Math.cos(angle) * radius + 'px');
+        p.style.setProperty('--ty', Math.sin(angle) * radius + 'px');
+        burst.appendChild(p);
+      }
+      
+      document.getElementById('gameArea').appendChild(burst);
+      setTimeout(() => {
+        if (burst.parentNode) burst.remove();
       }, 500);
     }
 
@@ -759,7 +1535,7 @@
       document.getElementById('redBox').classList.add('opened');
     }
 
-    function openSmallBox(el) {
+    function openAndPreview(el, src) {
       if(!el.classList.contains('opened')) {
         el.classList.add('opened');
         boxesOpened++;
@@ -769,7 +1545,22 @@
             document.getElementById('nextToAudioBtn').classList.add('visible');
           }, 1000);
         }
+      } else {
+        // Already opened, show preview
+        openPreview(src);
       }
+    }
+
+    function openPreview(src) {
+      const modal = document.getElementById('imagePreviewModal');
+      const img = document.getElementById('previewImg');
+      img.src = src;
+      modal.classList.add('active');
+    }
+
+    function closePreview() {
+      const modal = document.getElementById('imagePreviewModal');
+      modal.classList.remove('active');
     }
 
     // Screen 5: Audio Reveal
@@ -785,6 +1576,27 @@
         audioEl.play().catch(e => console.log("Autoplay prevented by browser"));
       }
     }
+
+    // Floating Background Elements Initialization
+    function initFloatingElements() {
+      const bg = document.getElementById('floatingBg');
+      const elements = ['🎈', '❤️', '💖', '✨', '🎈'];
+      for(let i=0; i<30; i++) {
+        const el = document.createElement('div');
+        el.className = 'float-item';
+        el.innerText = elements[Math.floor(Math.random() * elements.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (Math.random() * 20 + 10) + 's';
+        el.style.animationDelay = (Math.random() * 10) + 's';
+        const size = Math.random() * 1.5 + 1;
+        el.style.fontSize = size + 'rem';
+        const sway = Math.random() > 0.5 ? 1 : -1;
+        el.style.setProperty('--sway', sway);
+        bg.appendChild(el);
+      }
+    }
+    
+    window.addEventListener('load', initFloatingElements);
   </script>
 </body>
 </html>
