@@ -892,6 +892,33 @@
       background: rgba(209, 73, 91, 0.8);
     }
 
+    /* Music Toggle */
+    .music-control {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .music-control.active {
+      display: flex;
+    }
+    .music-control i {
+      font-style: normal;
+      font-size: 20px;
+    }
+
     /* Security Classes */
     #protectedContent {
       display: none !important;
@@ -1211,11 +1238,7 @@
         <button id="revealAudioBtn" onclick="revealAudio()">Surprise Voice Note For You 🎧</button>
         
         <div id="audioPlayerContainer" class="audio-player" style="display:none; opacity:0;">
-          <!-- PLACEHOLDER AUDIO: Replace the src below with your audio link (.mp3, .m4a, etc) -->
-          <audio id="voiceNote" controls>
-            <source src="" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
+          <div><iframe width="300" height="60" src="https://vocaroo.com/embed/1ks71XGDz2J8?autoplay=0" frameborder="0" allow="autoplay"></iframe><br><a href="https://voca.ro/1ks71XGDz2J8" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo &gt;&gt;</a></div>
         </div>
 
         <button onclick="goToScreen('screen6')">Read Your Letter 💌</button>
@@ -1226,22 +1249,29 @@
     <div id="screen6" class="screen">
       <div class="glass-card love-letter">
         <div class="letter-scroll" id="letterContent">
-          <!-- PLACEHOLDER: Write her Name or Nickname below -->
-          <h2 class="title-cursive" style="text-align: left; font-size: 2.5rem;">My Dearest [Her Name / Nickname],</h2>
+          <h2 class="title-cursive" style="text-align: left; font-size: 2.5rem;">Dear Wifey❤️🫂🤌🏻</h2>
           
-          <!-- PLACEHOLDER: Type your long birthday message here inside the <p> tags -->
           <p>
-            Today is the most special day, because it's the day you came into this world. I am incredibly grateful for every moment, every smile, and every memory we share.
+            Mere Zindagii myy ajj bhtt zyadaa khushh hoo alalh ki kasamm❤️🫂🫂🫂🫂mere jannn ajj wo din agyaa jbb mujhe mere shehzadii mili thii Umaahhhhhh❤️💋💋💋💋💋💋Forhead or Hug mee bachaw i love youuu sooo sooo sooo muchh mya g na emotional ho jatyy prr my bhtt khushh meraa bachaw alalh mere jann kii lambii zindagii kryy orr apkooo meraa naseeb bnaa dyy ameen suameen🫂❤️❤️or hmyy isi trha aik dusryy ky sath bhtt zyada walyy birthday dekhna naseeb farmayy ameen sumameen❤️💋💋💋💋Forhead pr mere zindagi❤️🫂🫂🫂Mere jan mya g ny special apnyy abby ky lyee ye website bnaii❤️🤌🏻my soch rha tha kya special kroo phr mujhe idea ayaa Umaaahhhh❤️💋💋💋💋💋💋Mere muhtarma❤️🤌🏻my apsyy hhtt zyada muhabat krtaa mere janyman💋💋💋🫀 meraa sukkon❤️🫂🫂🫂🫂🫂Mere dil ki rahat❤️🫀💋💋💋💋💋muahhh❤️💋💋💋mere shehzadi mere duaa hy mela baby kaa acha achaa paper ho math ka❤️🫂muahhh❤️💋💋💋meraa sukkon shona jan jb b apmujhe koi apni kamyabi ki batt sunatii mujhe dil sy khushi hotii❤️💋💋💋🫂🫂🫂mere zindagi❤️🤌🏻allah mele babyy koo zyadaa shala number dyy oe inshalalh talalh ham apny bachoo ko btay gyy ky mama janii ny apky baba ka record tora tha inshalalh talalah mere jann❤️🫂🫂🫂🫂🫂
           </p>
           <p>
-            You light up my life in ways I never thought possible. [Continue your personalized message here...]
+            Melaa babyy apki muhabat mere dil my hamesha kaim rhy gi bachaw my jaha marzi jaoo zindagi my mere zindagi apka nam mere dil py likhaa hy or ap wo hy jinho ny mujhe tahajud jaise namaz prhna sikhai mere jann 🥺🥺❤️🫂ansu agyy my ny kbbi zindagi nhi prhii thi tahajud pr ap wo hy jinky lyee my sajdo my gir gira kr royaa bhtt mangaa allah myaa sy apni shehzadi ko mya g nyy bhtt🥺❤️❤️🫂🫂🫂Ummaaahhhhhh💋💋💋💋💋💋💋Forhead prr mere dil ki dhrkannn i love youu sooo sooo sooo muchhh mere janyman❤️🥺🥺🥺🫂🫂🫂ansuu agy bsshhh melaaa bachaw akhir my yehi dua allah mere jan ko mera naseeb bna dy or hamu aik happy life aik sath guzarnaa naseeb farmay ameen sumaeen❤️🫂🫂🫂🫂💋muahhh💋💋💋💋muahhh💋💋💋💋💋
           </p>
           
-          <div class="closing">All my love,<br>Fasih (Sahib) ❤️</div>
+          <div class="closing">From Mya g❤️🫂</div>
         </div>
         <button onclick="goToScreen('screen2')" style="margin-top: 30px;">Replay Our Memories ⏪</button>
       </div>
     </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://www.sndup.net/5b562/d" type="audio/mpeg">
+  </audio>
+
+  <div id="musicToggle" class="music-control" onclick="toggleMusic()">
+    <span id="musicEmoji">🔇</span>
   </div>
 
   <!-- Image Preview Modal -->
@@ -1333,11 +1363,52 @@
 
     // Screen 1: Password Logic
     let isUnlocked = false;
+    let musicPlaying = false;
+
+    function toggleMusic() {
+      const bgMusic = document.getElementById('bgMusic');
+      const emoji = document.getElementById('musicEmoji');
+      if (bgMusic.paused) {
+        bgMusic.play();
+        emoji.innerText = '🎵';
+        musicPlaying = true;
+      } else {
+        bgMusic.pause();
+        emoji.innerText = '🔇';
+        musicPlaying = false;
+      }
+    }
+
     function checkPassword() {
       const pwd = document.getElementById('pwdInput').value;
       if(pwd === '0417') {
         isUnlocked = true;
         document.body.classList.add('is-unlocked');
+        document.getElementById('musicToggle').classList.add('active');
+        
+        // Start Background Music
+        const bgMusic = document.getElementById('bgMusic');
+        if (bgMusic) {
+          bgMusic.volume = 0.5;
+          bgMusic.play().then(() => {
+            musicPlaying = true;
+            document.getElementById('musicEmoji').innerText = '🎵';
+          }).catch(e => {
+            console.log("Audio play failed:", e);
+            // Fallback for strict browsers: Try to play on any next touch
+            const playOnce = () => {
+              bgMusic.play().then(() => {
+                musicPlaying = true;
+                document.getElementById('musicEmoji').innerText = '🎵';
+              });
+              document.removeEventListener('touchstart', playOnce);
+              document.removeEventListener('click', playOnce);
+            }
+            document.addEventListener('touchstart', playOnce);
+            document.addEventListener('click', playOnce);
+          });
+        }
+
         goToScreen('screen2');
       } else {
         const box = document.getElementById('pwdBox');
@@ -1569,12 +1640,6 @@
       const player = document.getElementById('audioPlayerContainer');
       player.style.display = 'block';
       setTimeout(() => player.style.opacity = '1', 50);
-      
-      // Optional: Auto-play if source exists
-      const audioEl = document.getElementById('voiceNote');
-      if(audioEl.src && !audioEl.src.endsWith('undefined') && !audioEl.src.endsWith('')) {
-        audioEl.play().catch(e => console.log("Autoplay prevented by browser"));
-      }
     }
 
     // Floating Background Elements Initialization
